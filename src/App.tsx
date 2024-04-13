@@ -25,6 +25,16 @@ function App() {
     { nombre: "Examen 1", id: 1, aula: null },
     { nombre: "Examen 2", id: 2, aula: null },
     { nombre: "Examen 3", id: 3, aula: null },
+    { nombre: "Examen 4", id: 4, aula: null },
+    { nombre: "Examen 5", id: 5, aula: null },
+    { nombre: "Examen 6", id: 6, aula: null },
+    { nombre: "Examen 7", id: 7, aula: null },
+    { nombre: "Examen 8", id: 8, aula: null },
+    { nombre: "Examen 9", id: 9, aula: null },
+    { nombre: "Examen 10", id: 10, aula: null },
+    { nombre: "Examen 11", id: 11, aula: null },
+    { nombre: "Examen 12", id: 12, aula: null },
+    { nombre: "Examen 13", id: 13, aula: null },
   ]);
 
   const [aulas, setAulas] = useState([
@@ -37,8 +47,24 @@ function App() {
     { nombre: "Aula 7", id: 7, examenes: [] },
     { nombre: "Aula 8", id: 8, examenes: [] },
   ]);
-
   const [aulasConExamenes, setAulasConExamenes] = useState<AulaConExamen[]>([]);
+
+  const automaticCalendarization = () => {
+    // Asignar examenes aulas
+    //asignar un examen a cada aula
+
+    const aulasConExamenes = examenes.map((examen, index) => {
+      return {
+        aula: aulas[index].nombre,
+        examen: examenes[index].nombre,
+      };
+    });
+
+    setAulasConExamenes(aulasConExamenes);
+
+    console.log(aulasConExamenes);
+  };
+
   console.log(aulasConExamenes);
   return (
     <>
@@ -51,7 +77,16 @@ function App() {
                 <div>
                   {aula.nombre}
                   {aula.examenes.length > 0 &&
-                    aula.examenes.map((examen) => <p key={examen}>{examen}</p>)}
+                    aula.examenes.map((examen) => (
+                      <p
+                        onClick={() => {
+                          console.log("EdiTE", examen);
+                        }}
+                        key={examen}
+                      >
+                        {examen}
+                      </p>
+                    ))}
                 </div>
               </Droppable>
             ))}
@@ -61,6 +96,7 @@ function App() {
             {examenes.map((examen) => (
               <Draggable key={examen.id} id={examen.id} name={examen.nombre}>
                 {examen.nombre}
+                <div>editar</div>
               </Draggable>
             ))}
           </div>
@@ -78,6 +114,9 @@ function App() {
           ))}
         </ul>
       </div>
+      <button onClick={automaticCalendarization}>
+        Iniciar calendarización
+      </button>
     </>
   );
 
